@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>班主任查成绩</title>
+  <!-- js -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+ 
+<script type="text/javascript">
+$(document).ready(function(){
+
+
+});
+</script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="/index">班主任查成绩</a>
+	        </div>
+	        <div class="collapse navbar-collapse" id="navbar">
+	        <ul class="nav navbar-nav">
+	        <li class="active"><a href="#">成绩图表</a></li>
+	        <li><a href="#">成绩数据</a></li>
+	        </ul>
+	        </div>
+	      </div>
+	</nav>
+
+<div class="container">
+
+  <div class="page-header">
+  </div>
+        
+<h4>班级选择</h4>
+    <hr>
+<ul class="nav nav-pills">
+    <p>成绩数据</p>
+    <form role="presentation" action="/paiming" method="get">
+        <select class="form-control" name="grade">
+              <option value="14" selected>14级</option>
+              <option value="15">15级</option>
+              <option value="16">16级</option>
+              <option value="17">17级</option>
+        </select>
+        <select class="form-control" name="num">
+              <option value="1" selected>网络工程</option>
+              <option value="2">计算机科学与技术</option>
+              <option value="3">信息安全</option>
+              <option value="4">软件工程</option>
+              <option value="5">物联网</option>
+        </select>
+        <select class="form-control" name="cls">
+              <option value="1" selected>1班</option>
+              <option value="2">2班</option>
+              <option value="3">3班</option>
+              <option value="4">4班</option>
+              <option value="5">5班</option>
+              <option value="6">6班</option>
+        </select>
+        <div style="text-align: right">
+            <button type="submit" class="btn btn-default">提交</button>
+        </div>
+    </form>
+    <hr>
+    <p>成绩图表</p>
+    <form role="presentation" action="/charts" method="get">
+        <select class="form-control" name="grade">
+              <option value="14" selected>14级</option>
+              <option value="15">15级</option>
+              <option value="16">16级</option>
+              <option value="17">17级</option>
+        </select>
+        <select class="form-control" name="num">
+              <option value="1" selected>网络工程</option>
+              <option value="2">计算机科学与技术</option>
+              <option value="3">信息安全</option>
+              <option value="4">软件工程</option>
+              <option value="5">物联网</option>
+        </select>
+        <select class="form-control" name="cls">
+              <option value="1" selected>1班</option>
+              <option value="2">2班</option>
+              <option value="3">3班</option>
+              <option value="4">4班</option>
+              <option value="5">5班</option>
+              <option value="6">6班</option>
+        </select>
+        <div style="text-align: right">
+            <button type="submit" class="btn btn-default">提交</button>
+        </div>
+    </form>
+</ul>
+
+</div>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+
+
+</body>
+</html>
+
+<script src="{% static "echarts.common.min.js" %}"></script>
+<script src="{% static "macarons.js" %}"></script>

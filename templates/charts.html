@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="/index">班主任查成绩</a>
+	        </div>
+	        <div class="collapse navbar-collapse" id="navbar">
+	        <ul class="nav navbar-nav">
+	        <li class="active"><a href="#">成绩图表</a></li>
+	        <li><a href="#">成绩数据</a></li>
+	        </ul>
+	        </div>
+	      </div>
+	</nav>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div class="container">
+    <div class="page-header">
+  	</div>
+  	<div class="alert alert-info">本数据仅供参考,具体以教务网为准</div>
+    	<div class="row">
+    		<div class="img-responsive" alt="Responsive image">
+    			<p class="text-primary" style="text-align: center;">本专业各班挂科人数&年排前十人数</p>
+    			<div id="main" class="center-block" style="margin: 0; min-height:400px; height: auto"></div>
+    			<hr>
+    			<p class="text-primary" style="text-align: center;">本专业各班平均学分绩点分布</p>
+    			<div id="main2" class="center-block" style="margin: 0; height:400px;"></div>
+    			<hr>
+    			<p class="text-primary" style="text-align: center;">本班个人挂科数&优秀数</p>
+    			<div id="main3" class="center-block" style="margin: 0; min-height:1000px; height: auto"></div>
+    		</div>
+    	</div>
+    </div>
+
+</body>
+</html>
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{% static "echarts.common.min.js" %}"></script>
+    <script src="{% static "macarons.js" %}"></script>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- 引入 ECharts 文件 -->
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'), 'macarons');
+        var myChart2 = echarts.init(document.getElementById('main2'), 'macarons');
+        var myChart3 = echarts.init(document.getElementById('main3'), 'macarons');
+        // 指定图表的配置项和数据
+        var option = {
+        	baseOption:{
+	            title: {
+	                text: ''
+	            },
+	            tooltip: {},
+	            legend: {
+	                data:['挂科人数', '年排前十'],
+	            },
+	            xAxis: {
+	                data: [{% for i in all_cls %}
+                        '{{ i | safe }}',
+                            {% endfor %}]
+	            },
+	            yAxis: {},
+	            series: [{
+	                name: '挂科人数',
+	                type: 'bar',
+	                data: [{% for i in all_fail_num %}{{ i | safe }},{% endfor %}]
+	            },
+	            {
+	                name: '年排前十',
+	                type: 'bar',
+	                data: [{% for i in all_rank_ten %}
+                        {{ i | safe }},
+                            {% endfor %}]
+	            }]
+        	},
+        };
+
+		var gpa = {
+		    title: {
+		        text: ''
+		    },
+		    tooltip: {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		        data:['1.5以下','1.5-2.0','2.0-2.5','2.5-3.0','3.0以上']
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    toolbox: {
+
+		    },
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data: [{% for i in all_cls %}'{{ i | safe }}',{% endfor %}]
+		    },
+		    yAxis: {
+		        type: 'value'
+		    },
+		    series: [
+		        {
+		            name:'1.5以下',
+		            type:'line',
+		            stack: '',
+		            data:[{% for i in all_gpa_list1 %}{{ i | safe }},{% endfor %}]
+		        },
+		        {
+		            name:'1.5-2.0',
+		            type:'line',
+		            stack: '',
+		            data:[{% for i in all_gpa_list2 %}{{ i | safe }},{% endfor %}]
+		        },
+		        {
+		            name:'2.0-2.5',
+		            type:'line',
+		            stack: '',
+		            data:[{% for i in all_gpa_list3 %}{{ i | safe }},{% endfor %}]
+		        },
+		        {
+		            name:'2.5-3.0',
+		            type:'line',
+		            stack: '',
+		            data:[{% for i in all_gpa_list4 %}{{ i | safe }},{% endfor %}]
+		        },
+		        {
+		            name:'3.0以上',
+		            type:'line',
+		            stack: '',
+		            data:[{% for i in all_gpa_list5 %}{{ i | safe }},{% endfor %}]
+		        }
+		    ]
+		};
+
+		var fall = {
+		    tooltip : {
+		        trigger: 'axis',
+		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+		        }
+		    },
+		    legend: {
+		        data:['90分以上', '挂科数']
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    xAxis : [
+		        {
+		            type : 'value'
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'category',
+		            axisTick : {show: false},
+		            data : [{% for i in all_name %}'{{ i | safe }}',{% endfor %}]
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'90分以上',
+		            type:'bar',
+		            label: {
+		                normal: {
+		                    show: true,
+		                    position: 'inside'
+		                }
+		            },
+		            data:[{% for i in great_num %}{{ i | safe }},{% endfor %}]
+		        },
+		        {
+		            name:'挂科数',
+		            type:'bar',
+		            stack: '总量',
+		            label: {
+		                normal: {
+		                    show: true,
+		                    position: 'left'
+		                }
+		            },
+		            data:[{% for i in fail_num %}{{ i | safe }},{% endfor %}]
+		        }
+		    ]
+		};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        myChart2.setOption(gpa);
+        myChart3.setOption(fall);
+    </script>

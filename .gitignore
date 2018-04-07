@@ -1,0 +1,4 @@
+*.pyc
+setting.py
+ScoreQuery/page/
+ScoreQuery/yzm/
