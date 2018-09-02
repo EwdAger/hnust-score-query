@@ -101,10 +101,10 @@ def init_teachers():
 def del_data():
     models.Student.objects.all().delete()
     models.Course.objects.all().delete()
-    dir = "ScoreQuery/page/Score"
-    if os.path.exists(dir):
-        shutil.rmtree(dir, 0755)
-    os.mkdir(dir)
+    # dir = "ScoreQuery/page/Score"
+    # if os.path.exists(dir):
+    #     shutil.rmtree(dir, 0755)
+    # os.mkdir(dir)
     init_score_data()
 
 def update_score():
